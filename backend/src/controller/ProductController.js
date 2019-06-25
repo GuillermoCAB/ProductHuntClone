@@ -1,35 +1,35 @@
-const Product = require('../models/Product.js');
+const Product = require("../models/Product.js");
 
 module.exports = {
     async index (req, res) {
-       const { page = 1 } = req.query;
-       const products = await Product.paginate({}, { page, limit: 10 });
+        const { page = 1 } = req.query;
+        const products = await Product.paginate({}, { page, limit: 10 });
 
-    return res.json(products);
+        return res.json(products);
     },
 
     async show (req, res) {
-       const product = await Product.findById(req.params.id);
+        const product = await Product.findById(req.params.id);
 
-       return res.json(product);
+        return res.json(product);
     },
 
     async update (req, res) {
-       const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
 
-       return res.json(product);
+        return res.json(product);
     },
 
-     async store (req, res) {
+    async store (req, res) {
         const product = await Product.create(req.body);
 
         return res.json(product);
-     },
+    },
 
-     async destroy (req, res) {
+    async destroy (req, res) {
         await Product.findByIdAndRemove(req.params.id);
 
         return res.send();
-     }
+    }
 
 };
