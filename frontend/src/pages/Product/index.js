@@ -34,12 +34,6 @@ export default class Product extends Component {
         this.loadProducts();        
     };
 
-    updateItem = async () => {
-        const { id } = this.props.match.params;
-
-        await api.update(`/products/${id}`);
-    };
-
     handleSubmit = async e => {
         e.preventDefault();
 
@@ -49,8 +43,6 @@ export default class Product extends Component {
         const data = {'title': this.state.title, 'description': this.state.description, 'url': this.state.url}
 
         await api.put(`/products/${id}`, data);
-
-        console.log(this.state, data);
 
         this.loadProducts();
     }
@@ -70,44 +62,51 @@ export default class Product extends Component {
             <div className="product-info">
                 <h1>{product.title}</h1>
                 <p>{product.description}</p>
-                <p>URL:<a href={product.url}>{product.url}</a></p>
+                <p><a href={product.url}>{product.url}</a></p>
                 <div className="actions">
                     <button onClick={this.deleteItem}>Delete</button>
-                    <button onClick={(e) => this.setState({ edit: true })}>Modificar</button>
+                    <button onClick={(e) => this.setState({ edit: true, title:product.title, description:product.description, url:product.url })}>Modificar</button>
                 </div>
             </div>
         
-
-            <Dialog className="product-edit" edit={this.state.edit}>
-            <form id="new-post" onSubmit={this.handleSubmit}>
+            <Dialog edit={this.state.edit}>            
+            <div className="product-info">
+            <form id="product-update" onSubmit={this.handleSubmit}>
+               <p>Título:</p>
                <input 
                type="text" 
                name="title" 
-               placeholder="Autor do post"
+               placeholder='Título'
                onChange={this.handleChange}
                value={this.state.title}
+               required='true'
                 />
 
+               <p>Descrição:</p>
                <input 
                type="text" 
                name="description" 
-               placeholder="Local do post"
+               placeholder='Descrição'
                onChange={this.handleChange}
                value={this.state.description}
+               required='true'
                 />
 
+               <p>URL:</p>
                <input 
                type="text" 
                name="url" 
-               placeholder="Descrição do post"
+               placeholder='URL'
                onChange={this.handleChange}
                value={this.state.url}
+               required='true'
                 />
-
+            <div className='actions'>
                 <button type="submit">Atualizar</button>
-
+            </div>
             </form>
-            </Dialog>
+            </div>
+            </Dialog>            
         </div>
 
         
