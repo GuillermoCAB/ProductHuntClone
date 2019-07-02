@@ -56,7 +56,7 @@ export default class Product extends Component {
     render() {
         const { product } = this.state;
 
-        if ( product === null ) return <p>Produto Inexistente</p>;
+        if ( product === null ) return 'Produto Inexistente';
 
         return <div> 
             <div className="product-info">

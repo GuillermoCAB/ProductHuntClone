@@ -29,8 +29,18 @@ export default class New extends Component {
         this.setState({ [e.target.name]: e.target.value });        
     }
 
+    routeChange = () => {
+        let path = `/`;
+        this.props.history.push(path);
+    }
+
     render() {
-        if ( this.state.ok === true ) return 'Cadastrado com sucesso';
+        if ( this.state.ok === true ) return <div  className='sucesso' >
+                                                <p>Cadastrado com sucesso</p>
+                                                <div className='actions-center'>
+                                                    <button type="button" onClick={this.routeChange}>Página Inicial</button>
+                                                </div>
+                                            </div>;
 
         return <div>              
             <Dialog edit={this.state.edit}>            
@@ -65,8 +75,8 @@ export default class New extends Component {
                value={this.state.url}
                required='true'
                 />
-            <div className='actions'>
-                <button type="submit">Atualizar</button>
+            <div className='actions-center'>
+                <button type="submit">Criar Post</button>
             </div>
             </form>
             </div>
