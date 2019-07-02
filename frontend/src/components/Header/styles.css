@@ -10,3 +10,14 @@ header#main-header {
     align-items: center;
 
 }
+
+header#main-header a {
+    text-decoration: none;
+    color: #fff;
+}
+
+header#main-header a#new {
+    text-decoration: none;
+    color: #fff;
+    margin-left: 60%;
+}

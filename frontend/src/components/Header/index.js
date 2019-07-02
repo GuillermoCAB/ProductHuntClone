@@ -1,8 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
 import "./styles.css";
 
-const Header = () => (
-    <header id="main-header">Hello Bitchass</header>
-);
+export default class Main extends Component {
 
-export default Header;
+    render (){
+    return <header id="main-header"><a href="/">Clone PH</a><a id='new' href="/new">Novo Post</a></header>
+    };
+
+};
