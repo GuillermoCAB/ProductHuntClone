@@ -4,14 +4,16 @@ import api from '../../services/api.js';
 import './styles.css';
 import ProductForm from '../../components/ProductForm';
 import Warning from '../../components/Warning';
+import Spinner from '../../components/Spinner/Spinner.js';
 
 export default class Product extends Component {
     state = {
-        product: 123,
+        product: "",
         edit: false,
         title: "",
         description: "",
-        url: ""
+        url: "",
+        loading: true
         
     };
 
@@ -24,7 +26,7 @@ export default class Product extends Component {
 
         const response = await api.get(`/products/${id}`);
 
-        this.setState ({ product: response.data, edit: false });        
+        this.setState ({ product: response.data, edit: false, loading: false });  
     };
 
     deleteItem = async () => {
@@ -39,6 +41,8 @@ export default class Product extends Component {
         e.preventDefault();
 
         const { id } = this.props.match.params;
+
+        this.setState({ loading: true });
 
         // eslint-disable-next-line
         const data = {'title': this.state.title, 'description': this.state.description, 'url': this.state.url}
@@ -55,10 +59,10 @@ export default class Product extends Component {
     }
 
     render() {
-        const { product } = this.state;
-
+        const { product, loading } = this.state;
+        
+        if ( loading === true ) return <Spinner />;
         if ( product === null ) return <Warning history={this.props.history} >Produto Deletado com Sucesso</Warning>;
-        if ( product === 123 ) return <Warning history={this.props.history} >Produto Inexistente</Warning>;
 
         return <div> 
             <div className="product-info">

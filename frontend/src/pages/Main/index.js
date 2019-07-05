@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../services/api.js';
+import Spinner from '../../components/Spinner/Spinner.js'
 
 import './styles.css';
 
@@ -9,6 +10,7 @@ export default class Main extends Component {
         products: [],
         productsInfo: {},
         page: 1,
+        loading: true,
     };
     
 
@@ -21,7 +23,7 @@ export default class Main extends Component {
 
         const { docs, ...productsInfo } = response.data;
 
-        this.setState({ products: docs, productsInfo, page });
+        this.setState({ products: docs, productsInfo, page, loading: false });
     }; 
 
     prevPage = () => {
@@ -45,7 +47,9 @@ export default class Main extends Component {
     };
 
     render() {
-        const { products, page, productsInfo } = this.state;
+        const { products, page, productsInfo, loading } = this.state;
+
+        if (this.state.loading === true ) return <Spinner />;
 
         return <div className="product-list">
           {products.map( product => (
